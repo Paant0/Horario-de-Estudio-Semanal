@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7fb">
+  <title>Horario de Estudio Semanal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Tu semana, mejor organizada</p>
+        <h1>Horario de Estudio Semanal</h1>
+        <p class="intro">Registra tus materias, distribuye tus sesiones y consulta de un vistazo cuánto tiempo dedicas a cada objetivo.</p>
+      </div>
+      <p class="privacy-note">Tus datos se guardan en el navegador de este dispositivo y no se sincronizan automáticamente con otros dispositivos.</p>
+    </header>
+
+    <div id="mensaje" class="notice" role="status" aria-live="polite"></div>
+
+    <div class="top-grid">
+      <section class="card" aria-labelledby="materias-titulo">
+        <div class="section-heading">
+          <div>
+            <h2 id="materias-titulo">Administrar materias</h2>
+            <p class="section-copy">Define cuánto tiempo quieres dedicar a cada una.</p>
+          </div>
+        </div>
+        <form id="form-materia" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="nombre-materia">Nombre de la materia</label>
+              <input id="nombre-materia" name="nombre" type="text" maxlength="80" placeholder="Ej.: Matemáticas" required>
+            </div>
+            <div class="field">
+              <label for="objetivo-materia">Objetivo (horas/semana)</label>
+              <input id="objetivo-materia" name="objetivo" type="number" min="0.25" step="0.25" placeholder="5" required>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="button" id="guardar-materia" type="submit">Agregar materia</button>
+            <button class="button secondary" id="cancelar-materia" type="button" hidden>Cancelar edición</button>
+          </div>
+        </form>
+        <ul id="lista-materias" class="list" aria-label="Materias registradas"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="sesiones-titulo">
+        <div class="section-heading">
+          <div>
+            <h2 id="sesiones-titulo">Programar sesión</h2>
+            <p class="section-copy">Elige una materia, un día y un intervalo entre las 06:00 y las 22:00.</p>
+          </div>
+        </div>
+        <form id="form-sesion" novalidate>
+          <div class="session-form-grid">
+            <div class="field">
+              <label for="sesion-materia">Materia</label>
+              <select id="sesion-materia" name="materia" required></select>
+            </div>
+            <div class="field">
+              <label for="sesion-dia">Día</label>
+              <select id="sesion-dia" name="dia" required></select>
+            </div>
+            <div class="field">
+              <label for="hora-inicio">Hora de inicio</label>
+              <input id="hora-inicio" name="inicio" type="time" min="06:00" max="22:00" required>
+            </div>
+            <div class="field">
+              <label for="hora-fin">Hora de finalización</label>
+              <input id="hora-fin" name="fin" type="time" min="06:00" max="22:00" required>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="button" id="guardar-sesion" type="submit">Agregar sesión</button>
+            <button class="button secondary" id="cancelar-sesion" type="button" hidden>Cancelar edición</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <section class="card summary-card" aria-labelledby="resumen-titulo">
+      <div class="section-heading">
+        <div>
+          <h2 id="resumen-titulo">Resumen de estudio</h2>
+          <p class="section-copy">Las horas se calculan a partir de la duración real de cada sesión.</p>
+        </div>
+      </div>
+      <div class="summary-total"><strong id="total-semanal">0 h</strong><span>programadas esta semana</span></div>
+      <div class="summary-columns">
+        <div>
+          <h3 class="summary-subtitle">Por día</h3>
+          <div id="totales-diarios" class="day-totals"></div>
+        </div>
+        <div>
+          <h3 class="summary-subtitle">Por materia y objetivo semanal</h3>
+          <div id="totales-materias" class="subject-totals"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card schedule-card" aria-labelledby="horario-titulo">
+      <div class="section-heading">
+        <div>
+          <h2 id="horario-titulo">Horario semanal</h2>
+          <p class="section-copy">Cada bloque se ubica según el día y la hora; su altura representa la duración.</p>
+        </div>
+        <span class="schedule-legend">06:00–22:00 · formato 24 h</span>
+      </div>
+      <div class="schedule-scroll" tabindex="0" aria-label="Horario semanal desplazable horizontalmente">
+        <div class="schedule-grid">
+          <div id="encabezados-dias" class="day-headings"></div>
+          <div id="cuerpo-horario" class="schedule-body"></div>
+        </div>
+      </div>
+      <p id="horario-vacio" class="schedule-empty">Aún no hay sesiones programadas. Agrega tu primera sesión para verla en el horario.</p>
+    </section>
+
+    <section class="card sessions-card" aria-labelledby="sesiones-lista-titulo">
+      <div class="section-heading">
+        <div>
+          <h2 id="sesiones-lista-titulo">Sesiones programadas</h2>
+          <p class="section-copy">Desde aquí puedes editar o eliminar cualquier sesión.</p>
+        </div>
+      </div>
+      <ul id="lista-sesiones" class="list" aria-label="Sesiones programadas"></ul>
+      <div class="footer-actions">
+        <button class="button danger" id="borrar-todo" type="button">Borrar todos los datos</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
